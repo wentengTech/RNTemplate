@@ -1,4 +1,4 @@
-import {authReducer, authState, AuthContext} from "./auth";
+import {authReducer, authState, AuthContext} from "./storeAuth";
 import storeNames from "./storeNames";
 
 export {

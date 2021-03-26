@@ -5,7 +5,7 @@ export default {
         logout: 'system_logout'
     },
 
-    stateNames: {
+    authNames: {
         userId: 'system_auth_user_id'
     }
 }

@@ -19,14 +19,13 @@ const authReducer = (state, action) => {
     for (let key in authState) {
         if (action[key] !== undefined) {
             authState[key] = action[key]
-            updateAsyncStorage(storeNames.stateNames[key], authState[key])
+            updateAsyncStorage(storeNames.authNames[key], authState[key])
         }
     }
 
     return {
         ...state,
-        hasInitialed: authState.hasInitialed,
-        userId: authState.userId
+        ...authState
     }
 }
 

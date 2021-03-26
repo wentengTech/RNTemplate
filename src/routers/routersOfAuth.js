@@ -1,5 +1,5 @@
 // app的授权模块页面路由
-import {NavigatorScreenOptions} from "./options";
+import {NavigatorScreenOptions} from "./routerOptions";
 import {createStackNavigator} from "@react-navigation/stack";
 import React from "react";
 import routerNames from "./routerNames";

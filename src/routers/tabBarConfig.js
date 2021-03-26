@@ -15,14 +15,10 @@ export function tabBarNavigator(props) {
     return (
         <BottomTabNavigator.Navigator
             screenOptions={({navigation, route}) => tabBarScreenOptions(navigation, route)}
-            // tabBarOptions={{
-            //     activeTintColor: isDarkTheme() ? 'white' : 'gray',
-            //     inactiveTintColor: isDarkTheme() ? 'red' : 'red',
-            //     style: isIos() ? null : {
-            //         paddingBottom: 12,
-            //         height: 62,
-            //     },
-            // }}
+            tabBarOptions={{
+                activeTintColor: 'red',
+                inactiveTintColor: 'grey',
+            }}
         >
             <BottomTabNavigator.Screen name={routerNames.tab.home} component={Home}/>
             <BottomTabNavigator.Screen name={routerNames.tab.tabView1} component={TabView1}/>
@@ -36,36 +32,6 @@ export function tabNavigatorOptions(route, navigation, msgCountInfo) {
     const routeName = getFocusedRouteNameFromRoute(route);
     return {
         headerTitle: getHomeStackNavigatorTitle(routeName),
-        // headerShown: !(routeName === PageRouterNames.tab_statistic || routeName === PageRouterNames.tab_product),
-        // headerLeft: () => (
-        //     <TouchableOpacity style={{
-        //         padding: value.small_interval,
-        //         marginLeft: value.small_interval,
-        //     }} onPress={() => {
-        //         navigation.navigate(PageRouterNames.base.qr_code_scanner_view);
-        //     }}>
-        //         <Icon style={{color: color.label_color}} size={24} name="scan-outline"/>
-        //     </TouchableOpacity>
-        // ),
-        // headerRight: () => (
-        //     <TouchableOpacity style={{
-        //         padding: value.small_interval,
-        //         marginRight: value.small_interval,
-        //     }} onPress={() => {
-        //         navigation.navigate(PageRouterNames.notification.list);
-        //     }}>
-        //         <Icon style={{color: color.label_color}} size={24} name="notifications-outline"/>
-        //         {msgCountInfo != null && msgCountInfo > 0 && (
-        //             <Badge value={msgCountInfo} status="error"
-        //                    containerStyle={{
-        //                        position: 'absolute',
-        //                        top: 2,
-        //                        right: 2,
-        //                    }}
-        //             />
-        //         )}
-        //     </TouchableOpacity>
-        // ),
     };
 }
 
@@ -78,42 +44,6 @@ function tabBarScreenOptions(navigation, route) {
         },
         tabBarIcon: ({focused, color, size}) => {
             return <Image source={focused ? require('./../resources/image/dashboard_focus.png') : require('./../resources/image/dashboard.png')} style={{width: size, height: size}}/>
-            // // 自定义收银
-            // if (route.name === PageRouterNames.tab_cashier) {
-            //     return null;
-            // }
-            // let iconName;
-            // let focusedImageName;
-            //
-            // if (route.name === PageRouterNames.tab_home) {
-            //     iconName = 'home-outline';
-            //     focusedImageName = 'home_focused';
-            // } else if (route.name === PageRouterNames.tab_mine) {
-            //     iconName = 'person-outline';
-            //     focusedImageName = 'mine_focused';
-            // } else if (route.name === PageRouterNames.tab_product) {
-            //     iconName = 'cube-outline';
-            //     focusedImageName = 'product_focused';
-            // } else if (route.name === PageRouterNames.tab_statistic) {
-            //     iconName = 'stats-chart-outline';
-            //     focusedImageName = 'statistic_focused';
-            // }
-            //
-            // You can return any component that you like here!
-            // return <Icon name={iconName} size={size} color={color} />;
-            //
-            // // 未选中处理
-            // if (!focused) {
-            //     return <Icon name={iconName} size={size} color={color} />;
-            // }
-            // // 选中处理
-            // else {
-            //     return (
-            //         <View style={[{width: size, height: size}]}>
-            //             <SesameImage fileName={focusedImageName} darkable={false} />
-            //         </View>
-            //     );
-            // }
         },
     };
 }
@@ -133,11 +63,3 @@ function getHomeStackNavigatorTitle(routeName) {
     }
 }
 
-// // 设定tab item的title样式
-// function getTabBarTextStyle(color, size) {
-//     return {
-//         color: color,
-//         fontSize: size,
-//         // paddingBottom: isIos() && NativeModules.ReactNativeCommunication.heightOfSafeAreaBottom <= 0 ? 3 : 0,
-//     };
-// }
