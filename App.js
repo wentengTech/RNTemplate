@@ -4,8 +4,8 @@ import {routersOfAuth, routerNames, routers} from "./src/routers";
 import {useEffect, useReducer} from "react";
 import {authReducer, authState, storeNames, AuthContext} from "./src/store";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {isDarkTheme} from "./src/utils/utils";
-
+import {isDarkTheme} from "./src/utils/tools";
+import {RootSiblingParent} from 'react-native-root-siblings';
 
 function App() {
 
@@ -41,17 +41,19 @@ function App() {
 
     return (
         <AuthContext.Provider value={authContext}>
-            {state.hasInitialed && (
-                (!state.userId ? (
-                    <NavigationContainer key={routerNames.login} theme={isDarkTheme() ? DarkTheme : DefaultTheme}>
-                        {routersOfAuth()}
-                    </NavigationContainer>
-                ) : (
-                    <NavigationContainer key={routerNames.home} theme={isDarkTheme() ? DarkTheme : DefaultTheme}>
-                        {routers()}
-                    </NavigationContainer>
-                ))
-            )}
+            {state.hasInitialed ?
+                <RootSiblingParent>
+                    {!state.userId ?
+                        <NavigationContainer key={routerNames.login} theme={isDarkTheme() ? DarkTheme : DefaultTheme}>
+                            {routersOfAuth()}
+                        </NavigationContainer>
+                        :
+                        <NavigationContainer key={routerNames.home} theme={isDarkTheme() ? DarkTheme : DefaultTheme}>
+                            {routers()}
+                        </NavigationContainer>
+                    }
+                </RootSiblingParent>
+                : null}
         </AuthContext.Provider>
     );
 
