@@ -4,10 +4,10 @@ import RootToast from 'react-native-root-toast';
 import {ToastUtils} from "./index";
 import {isDevelopment} from "./tools";
 import Mock from 'mockjs'
-
+import DeviceInfo from 'react-native-device-info';
 
 // 网络架构
-const network = {
+const RequestUtils = {
     get: (url, parameters, successEvent, completionEvent, failureEvent, loadingTitle) => {
         loadingTitle = loadingTitle === undefined ? '加载中...' : loadingTitle;
         request(url, 'GET', parameters, completionEvent, successEvent, failureEvent, loadingTitle);
@@ -25,6 +25,7 @@ const network = {
 
     // 假数据的get请求
     mockGet: (mockOption, url, parameters, successEvent, completionEvent, failureEvent, loadingTitle) => {
+        console.log('ddr')
         // 如果是开发环境并且本地配置了开发环境的useMock属性为true 和 配置了假数据选项，则启用假数据接口
         if (isDevelopment() && configObj.useMock && mockOption) {
             const mockData = Mock.mock(mockOption)
@@ -34,11 +35,11 @@ const network = {
         }
         // 否则发起请求
         else {
-            network.get(url, parameters, successEvent, completionEvent, failureEvent, loadingTitle);
+            RequestUtils.get(url, parameters, successEvent, completionEvent, failureEvent, loadingTitle);
         }
     }
 }
-export default network;
+export default RequestUtils;
 
 
 /**
@@ -79,9 +80,9 @@ function request(url, type, parameters, completionEvent, successEvent, failureEv
         headers: {
             // 'Content-Type': 'application/x-www-form-urlencoded',
             // 'access-token': accessToken,
-            // 'build-number': DeviceInfo.getBuildNumber(),
             'platform': Platform.OS,
-            // 'version': DeviceInfo.getVersion(),
+            'buildNumber': DeviceInfo.getBuildNumber(),
+            'version': DeviceInfo.getVersion(),
         },
         body: type === 'GET' ? null : getRequestBody(parameters),
     })

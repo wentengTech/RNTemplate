@@ -1,5 +1,5 @@
 import ToastUtils from './toastUtils'
-import RequestUtils from './networkUtils'
+import RequestUtils from './requestUtils'
 
 export {
     ToastUtils,

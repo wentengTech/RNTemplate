@@ -1,9 +1,9 @@
 import React, {useContext, useEffect} from 'react';
 import {View, Text, Button} from 'react-native';
 import {AuthContext} from "../store";
-import {ToastUtils, RequestUtils} from '../utils'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Mock from 'mockjs'
+import {RequestUtils} from "../utils";
 
 export default function Home({navigation}) {
 
