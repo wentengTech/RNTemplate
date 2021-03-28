@@ -64,7 +64,8 @@ class CommonUtils: NSObject {
   
   // MARK: - 本地文件加载函数
   func getLocalDocumentFilePath(filePath: String) -> String {
-    let localFilePath    = NSHomeDirectory() + "/Documents/files\(filePath)"
+    let fileName = getFileName(filePath: filePath) + (CommonUtils.shared.encode64(str: filePath) ?? "xx_xx");
+    let localFilePath    = NSHomeDirectory() + "/Documents/files\(String(describing: fileName))"
     let parentFolderPath = getParentFolderPath(filePath: localFilePath)
     // 确保父文件夹创建好
     if !FileManager.default.fileExists(atPath: parentFolderPath) {
@@ -77,6 +78,11 @@ class CommonUtils: NSObject {
   private func getParentFolderPath(filePath: String) -> String {
     let index = filePath.endIndex(of: "/", options: .backwards) ?? filePath.endIndex
     return String(filePath[..<index])
+  }
+  
+  private func getFileName(filePath: String) -> String {
+    let index = filePath.endIndex(of: "/", options: .backwards) ?? filePath.startIndex
+    return String(filePath[filePath.index(index, offsetBy: 1)..<filePath.endIndex])
   }
   
   // MARK: -

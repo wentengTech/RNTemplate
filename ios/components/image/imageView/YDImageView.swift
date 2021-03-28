@@ -91,12 +91,15 @@ class YDImageView: UIImageView {
   }
   
   
-  public func showImage(imageName: String) {
+  public func showImage(imageName: String?) {
+    guard let imageNameValue = imageName else {
+      return
+    }
     if self.loadedShowImageName != nil, self.loadedShowImageName! == imageName {
       return
     }
-    self.loadedShowImageName = imageName
-    let image = UIImage(named: "\(imageName)")
+    self.loadedShowImageName = imageNameValue
+    let image = UIImage(named: "\(imageNameValue)")
     DispatchQueue.main.async {
       self.image = image
     }
@@ -104,18 +107,39 @@ class YDImageView: UIImageView {
   
   // 加载网络类型的图片
   public func loadImage(url: String?) {
+    self.showImage(imageName: self.defaultImageName as String?)
     guard let urlValue = url else {
       return
     }
-    if self.loadedShowFilePath != nil, self.loadedShowFilePath! == url {
+    if self.loadedShowFilePath != nil, self.loadedShowFilePath! == url, !url!.contains("http") {
       return
     }
-    if !url!.contains("http") {
-      return
-    }
+    
     self.loadedShowFilePath = url
-    let defaultImage = defaultImageName != nil ? UIImage(named: defaultImageName! as String) : nil
-    self.sd_setImage(with: URL(string: urlValue), placeholderImage: defaultImage)
+    // let defaultImage = defaultImageName != nil ? UIImage(named: defaultImageName! as String) : nil
+    // self.sd_setImage(with: URL(string: urlValue), placeholderImage: defaultImage)
+    
+    // 获取目标图片在本地系统的图片路径信息，可能不存在
+    let localFilePath = CommonUtils.shared.getLocalDocumentFilePath(filePath: urlValue)
+    
+    //优先检索本地是否存在该图片
+    if FileManager.default.fileExists(atPath: localFilePath) {
+        // 本地目录存在，则加载本地图片并显示
+      DispatchQueue.main.async {
+        self.image = UIImage.init(contentsOfFile: localFilePath)
+      }
+    } else {
+        // 本地目录不存在，则从网络服务器加载并显示，同时异步保存到本地目录
+        DispatchQueue.global().async {
+          if let requestUrl = URL(string: urlValue), let data: Data = try? Data(contentsOf: requestUrl), let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    self.image = image
+                }
+                // 保存图片到本地
+                try! image.pngData()?.write(to: URL(fileURLWithPath: "\(localFilePath)"), options: .atomic)
+            }
+        }
+    }
   }
 
 
