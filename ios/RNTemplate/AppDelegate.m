@@ -14,6 +14,8 @@
 
 // customer
 #import "RNSplashScreen.h"
+#import <RNTemplate-Swift.h>
+#import <IQKeyboardManager.h>
 
 static void InitializeFlipper(UIApplication *application) {
   FlipperClient *client = [FlipperClient sharedClient];
@@ -44,6 +46,11 @@ static void InitializeFlipper(UIApplication *application) {
   } else {
       rootView.backgroundColor = [UIColor whiteColor];
   }
+  
+  // 监听监听逻辑库设置
+  [[IQKeyboardManager sharedManager] setEnable:YES];
+  [[IQKeyboardManager sharedManager] setEnableAutoToolbar:NO];
+  [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];

@@ -4,6 +4,14 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 platform :ios, '10.0'
 
 target 'RNTemplate' do
+
+  # customer pods
+  pod 'SDWebImage'
+  pod 'IQKeyboardManager'
+  pod 'MBProgressHUD'
+  pod 'BMLongPressDragCellCollectionView'
+  pod 'CryptoSwift'
+
   config = use_native_modules!
 
   use_react_native!(
@@ -13,7 +21,6 @@ target 'RNTemplate' do
   )
 
 
-  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
   target 'RNTemplateTests' do
     inherit! :complete
