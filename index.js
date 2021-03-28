@@ -6,4 +6,12 @@ import {AppRegistry} from 'react-native';
 import App from './App';
 import {name as appName} from './app.json';
 
-AppRegistry.registerComponent(appName, () => App);
+import SplashScreen from 'react-native-splash-screen';
+
+AppRegistry.registerComponent(appName, () => {
+
+    // 启动页码的隐藏
+    SplashScreen.hide();
+
+    return App
+});

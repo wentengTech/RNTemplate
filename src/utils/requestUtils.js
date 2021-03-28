@@ -25,7 +25,6 @@ const RequestUtils = {
 
     // 假数据的get请求
     mockGet: (mockOption, url, parameters, successEvent, completionEvent, failureEvent, loadingTitle) => {
-        console.log('ddr')
         // 如果是开发环境并且本地配置了开发环境的useMock属性为true 和 配置了假数据选项，则启用假数据接口
         if (isDevelopment() && configObj.useMock && mockOption) {
             const mockData = Mock.mock(mockOption)
